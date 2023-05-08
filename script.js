@@ -13,22 +13,22 @@ let player2Position = [8, 4]; // Pozitia jucatorului 2
 let walls = []; // Lista cu toate zidurile
 let currentWall = null; // Zidul curent
 
+
 // Initializarea tabelului
 function setup() {
   createCanvas(tableOffset * 2 + cellSize * tableSize, tableOffset * 2 + cellSize * tableSize);
-
   createBoard();
 }
 
 // Desenarea tabelului
 function draw() {
   background(245);
-
   showBoard();
   
   // Desenarea celulelor
   stroke(0);
-  strokeWeight(3);
+  strokeWeight(10);
+
   
   
   // Desenarea jucatorilor
@@ -38,7 +38,8 @@ function draw() {
   function rosu(){
   fill('red');
   rect(tableOffset + player2Position[0] * cellSize, tableOffset + player2Position[1] * cellSize, cellSize, cellSize);
-  
+  fill('blue');
+  rect(tableOffset + player1Position[0] * cellSize, tableOffset + player1Position[1] * cellSize, cellSize, cellSize);
 }
 
 function createBoard() {
