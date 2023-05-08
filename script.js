@@ -34,7 +34,8 @@ function draw() {
   // Desenarea jucatorilor
   //fill('blue');
   //rect(tableOffset + player1Position[0] * cellSize, tableOffset + player1Position[1] * cellSize, cellSize, cellSize);
-  
+}
+  function rosu(){
   fill('red');
   rect(tableOffset + player2Position[0] * cellSize, tableOffset + player2Position[1] * cellSize, cellSize, cellSize);
   
@@ -80,19 +81,19 @@ function keyPressed() {
     squares[player1Position[1]][player1Position[0]].color = '#318247';
     player1Position[0]++;
     squares[player1Position[1]][player1Position[0]].color = 'blue';
-  } else if (key === 'i' && player2Position[1] > 0 && !wallExists(player2Position[0], player2Position[1]-1, player2Position[0], player2Position[1])) {
+  } else if (key === 'j' && player2Position[1] > 0 && !wallExists(player2Position[0], player2Position[1]-1, player2Position[0], player2Position[1])) {
     squares[player2Position[1]][player2Position[0]].color = '#318247';
     player2Position[1]--;
     squares[player2Position[1]][player2Position[0]].color = 'red';
-  } else if (key === 'k' && player2Position[1] < tableSize - 1 && !wallExists(player2Position[0], player2Position[1], player2Position[0], player2Position[1]+1)) {
+  } else if (key === 'l' && player2Position[1] < tableSize - 1 && !wallExists(player2Position[0], player2Position[1], player2Position[0], player2Position[1]+1)) {
     squares[player2Position[1]][player2Position[0]].color = '#318247';
     player2Position[1]++;
     squares[player2Position[1]][player2Position[0]].color = 'red';
-  } else if (key === 'j' && player2Position[0] > 0 && !wallExists(player2Position[0]-1, player2Position[1], player2Position[0], player2Position[1])) {
+  } else if (key === 'i' && player2Position[0] > 0 && !wallExists(player2Position[0]-1, player2Position[1], player2Position[0], player2Position[1])) {
     squares[player2Position[1]][player2Position[0]].color = '#318247';
     player2Position[0]--;
     squares[player2Position[1]][player2Position[0]].color = 'red';
-  } else if (key == 'l' && player2Position[0] < tableSize - 1 && !wallExists(player2Position[0], player2Position[1], player2Position[0]+1, player2Position[1])) {
+  } else if (key == 'k' && player2Position[0] < tableSize - 1 && !wallExists(player2Position[0], player2Position[1], player2Position[0]+1, player2Position[1])) {
     squares[player2Position[1]][player2Position[0]].color='#318247';
     player2Position[0]++; 
     squares[player2Position[1]][player2Position[0]].color='red';
