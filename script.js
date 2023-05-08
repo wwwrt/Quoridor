@@ -18,7 +18,14 @@ let currentWall = null; // Zidul curent
 function setup() {
   createCanvas(tableOffset * 2 + cellSize * tableSize, tableOffset * 2 + cellSize * tableSize);
   createBoard();
+
+  // Adaugam butonul de resetare
+  let resetButton = createButton('Reset');
+  resetButton.position(tableOffset * 2 + cellSize * tableSize - 60, 10);
+  resetButton.mousePressed(resetBoard);
 }
+
+
 
 // Desenarea tabelului
 function draw() {
@@ -28,13 +35,8 @@ function draw() {
   // Desenarea celulelor
   stroke(0);
   strokeWeight(10);
-
-  
-  
-  // Desenarea jucatorilor
-  //fill('blue');
-  //rect(tableOffset + player1Position[0] * cellSize, tableOffset + player1Position[1] * cellSize, cellSize, cellSize);
 }
+
   function rosu(){
   fill('red');
   rect(tableOffset + player2Position[0] * cellSize, tableOffset + player2Position[1] * cellSize, cellSize, cellSize);
@@ -63,6 +65,21 @@ function showBoard() {
     }
   }
 }
+
+// Resetarea tablei de joc la pozitia initiala
+function resetBoard() {
+  player1Position = [0, 4];
+  player2Position = [8, 4];
+  walls = [];
+  
+  // Reseteaza culorile celulelor
+  for (let i = 0; i < tableSize; i++) {
+    for (let j = 0; j < tableSize; j++) {
+      squares[i][j].color = '#318247';
+    }
+  }
+}
+
 
 // Mutarea jucatorilor
 function keyPressed() {
