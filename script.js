@@ -5,6 +5,30 @@ let tableOffset = 50; // Offset-ul tablei
 
 let squares = []; 
 
+const player1Input = document.getElementById("player1");
+const player2Input = document.getElementById("player2");
+
+const player1NameElement = document.getElementById("player1-name");
+const player2NameElement = document.getElementById("player2-name");
+
+const canvas = document.getElementById("game-canvas");
+const ctx = canvas.getContext("2d");
+
+// Setarea numelor jucătorilor
+function setPlayerNames() {
+  player1NameElement.textContent = player1Input.value;
+  player2NameElement.textContent = player2Input.value;
+}
+
+// Desenarea jocului pe canvas
+function drawGame() {
+  // Cod pentru desenarea jocului aici
+}
+
+// Apelarea funcțiilor
+setPlayerNames();
+drawGame();
+
 // Variabilele pentru jucatori
 let player1Position = [0, 4]; // Pozitia jucatorului 1
 let player2Position = [8, 4]; // Pozitia jucatorului 2
@@ -34,7 +58,7 @@ function draw() {
   
   // Desenarea celulelor
   stroke(0);
-  strokeWeight(10);
+  strokeWeight(15);
 }
 
   function rosu(){
