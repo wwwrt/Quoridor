@@ -14,6 +14,8 @@ const player2NameElement = document.getElementById("player2-name");
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
 
+
+
 // Setarea numelor jucătorilor
 function setPlayerNames() {
   player1NameElement.textContent = player1Input.value;
