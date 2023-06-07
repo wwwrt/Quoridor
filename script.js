@@ -1,7 +1,7 @@
 // Variabilele pentru tabla
 let tableSize = 9; // Marimea tablei
 let cellSize = 50; // Marimea unei celule
-let tableOffset = 50; // Offset-ul tablei
+let tableOffset = 60; // Offset-ul tablei
 
 
 let squares = []; 
@@ -24,13 +24,15 @@ function setPlayerNames() {
 }
 
 // Desenarea jocului pe canvas
-function drawGame() {
-  // Cod pentru desenarea jocului aici
-}
+function drawGame() {  
+  displayMessage(); // Afișează mesajul corespunzător
+  }
+  
+
 
 // Apelarea funcțiilor
 setPlayerNames();
-drawGame();
+
 
 // Variabilele pentru jucatori
 let player1Position = [0, 4]; // Pozitia jucatorului 1
@@ -44,6 +46,9 @@ let currentWall = null; // Zidul curent
 
 // Initializarea tabelului
 function setup() {
+  player1Name = prompt("Introduceți numele jucătorului 1:"); // Prompt pentru numele jucătorului 1
+  player2Name = prompt("Introduceți numele jucătorului 2:"); // Prompt pentru numele jucătorului 2
+
   createCanvas(tableOffset * 2 + cellSize * tableSize, tableOffset * 2 + cellSize * tableSize);
   createBoard();
 
@@ -59,10 +64,12 @@ function setup() {
 function draw() {
   background(245);
   showBoard();
+  displayMessage(); // Afișează mesajul corespunzător
+
   
   // Desenarea celulelor
-  stroke(0);
-  strokeWeight(15);
+  stroke(5);
+  strokeWeight(10);
 }
 
   function rosu(){
@@ -92,7 +99,33 @@ function showBoard() {
       rect(squares[i][j].x,squares[i][j].y , cellSize, cellSize);
     }
   }
+     // Desenează numele jucătorului 1 în partea de sus
+  fill(0);
+  textSize(20);
+  textAlign(CENTER, TOP);
+  noStroke();
+  text(player1Name, width / 2, 15);
+ 
+
+  // Desenează numele jucătorului 2 în partea de jos
+  textAlign(CENTER, BOTTOM);
+  noStroke();
+  text(player2Name, width / 2, height - 15);
 }
+
+function displayMessage() {
+  let message = "";
+  if (currentPlayer === 1) {
+    message = player1NameElement.textContent + ", este rândul tău!"; // Mesaj pentru jucătorul 1
+  } else if (currentPlayer === 2) {
+    message = player2NameElement.textContent + ", este rândul tău!"; // Mesaj pentru jucătorul 2
+  }
+  fill(255);
+  textSize(20);
+  text(message, 10, height + 40);
+}
+
+
 
 // Resetarea tablei de joc la pozitia initiala
 function resetBoard() {
