@@ -12,8 +12,8 @@ const player2Input = document.getElementById("player2");
 const player1NameElement = document.getElementById("player1-name");
 const player2NameElement = document.getElementById("player2-name");
 
-const canvas = document.getElementById("game-canvas");
-const ctx = canvas.getContext("2d");
+
+
 
 
 
@@ -56,6 +56,7 @@ function setup() {
   let resetButton = createButton('Reset');
   resetButton.position(tableOffset * 2 + cellSize * tableSize - 60, 10);
   resetButton.mousePressed(resetBoard);
+
 }
 
 
