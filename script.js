@@ -1,7 +1,7 @@
 // Variabilele pentru tabla
 let tableSize = 9; // Marimea tablei
 let cellSize = 50; // Marimea unei celule
-let tableOffset = 60; // Offset-ul tablei
+let tableOffset = 100; // Offset-ul tablei
 
 
 let squares = []; 
@@ -11,10 +11,6 @@ const player2Input = document.getElementById("player2");
 
 const player1NameElement = document.getElementById("player1-name");
 const player2NameElement = document.getElementById("player2-name");
-
-
-
-
 
 
 // Setarea numelor jucătorilor
@@ -30,11 +26,12 @@ function drawGame() {
     // Actualizează variabila isPlaying
     isPlaying = false;
 
-    // Afiseaza mesajul pentru jucătorul 1
-    let message = "Felicitări, " + player1NameElement.textContent + "! Ai câștigat!";
-    let messageContainer = document.getElementById("messageContainer");
-    messageContainer.textContent = message;
-    messageContainer.style.display = "block";
+   // Afiseaza mesajul pentru jucătorul 1
+let message = "Felicitări, " + player1Name + "! Ai câștigat!";
+fill('black');
+textSize(30);
+textAlign(CENTER, BOTTOM);
+text(message, width / 2, tableOffset - 60);
     noLoop(); // Oprește desenarea jocului
     return; // Ieși din funcție pentru a nu afișa mesajul de rând al jucătorului
   }
@@ -44,28 +41,22 @@ function drawGame() {
     // Actualizează variabila isPlaying
     isPlaying = false;
 
-    // Afiseaza mesajul pentru jucătorul 2
-    let message = "Felicitări, " + player2NameElement.textContent + "! Ai câștigat!";
-    let messageContainer = document.getElementById("messageContainer");
-    messageContainer.textContent = message;
-    messageContainer.style.display = "block";
+ // Afiseaza mesajul pentru jucătorul 2
+message = "Felicitări, " + player2Name + "! Ai câștigat!";
+fill('black');
+textSize(30);
+textAlign(CENTER, TOP);
+text(message, width / 2, height - tableOffset + 60);
     noLoop(); // Oprește desenarea jocului
     return; // Ieși din funcție pentru a nu afișa mesajul de rând al jucătorului
   }
-
-  background(255);
-
   // Afișează mesajul corespunzător
   // displayMessage();
+
+
 }
-
-
   
 let isPlaying = true;
-
-// Apelarea funcțiilor
-setPlayerNames();
-
 
 // Variabilele pentru jucatori
 let player1Position = [0, 4]; // Pozitia jucatorului 1
@@ -97,6 +88,7 @@ function setup() {
 // Desenarea tabelului
 function draw() {
   background(245);
+  setPlayerNames();
   showBoard();
   drawGame();
 
@@ -106,12 +98,6 @@ function draw() {
   strokeWeight(10);
 }
 
-  function rosu(){
-  fill('red');
-  rect(tableOffset + player2Position[0] * cellSize, tableOffset + player2Position[1] * cellSize, cellSize, cellSize);
-  fill('blue');
-  rect(tableOffset + player1Position[0] * cellSize, tableOffset + player1Position[1] * cellSize, cellSize, cellSize);
-}
 
 function createBoard() {
   for (let i = 0; i < tableSize; i++) {
@@ -135,16 +121,18 @@ function showBoard() {
   }
      // Desenează numele jucătorului 1 în partea de sus
   fill(0);
-  textSize(20);
-  textAlign(CENTER, TOP);
+  textSize(25);
+  textAlign(CENTER, BOTTOM);
   noStroke();
-  text(player1Name, width / 2, 15);
+  text(player1Name, width / 2, tableOffset - 10);
  
 
   // Desenează numele jucătorului 2 în partea de jos
+  fill(0);
+  textSize(25);
   textAlign(CENTER, BOTTOM);
   noStroke();
-  text(player2Name, width / 2, height - 15);
+  text(player2Name, width / 2, height - 70);
 }
 
 function displayMessage() {
@@ -173,7 +161,7 @@ function resetBoard() {
       squares[i][j].color = '#318247';
     }
   }
-
+  isPlaying = true;
   loop(); // Reluează desenarea jocului
 }
 
