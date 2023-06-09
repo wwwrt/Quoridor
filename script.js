@@ -24,11 +24,44 @@ function setPlayerNames() {
 }
 
 // Desenarea jocului pe canvas
-function drawGame() {  
-  displayMessage(); // Afișează mesajul corespunzător
-  }
-  
+function drawGame() {
+  // Verifică dacă jucătorul 1 a ajuns în capătul opus
+  if (player1Position[0] === tableSize - 1) {
+    // Actualizează variabila isPlaying
+    isPlaying = false;
 
+    // Afiseaza mesajul pentru jucătorul 1
+    let message = "Felicitări, " + player1NameElement.textContent + "! Ai câștigat!";
+    let messageContainer = document.getElementById("messageContainer");
+    messageContainer.textContent = message;
+    messageContainer.style.display = "block";
+    noLoop(); // Oprește desenarea jocului
+    return; // Ieși din funcție pentru a nu afișa mesajul de rând al jucătorului
+  }
+
+  // Verifică dacă jucătorul 2 a ajuns în capătul opus
+  if (player2Position[0] === 0) {
+    // Actualizează variabila isPlaying
+    isPlaying = false;
+
+    // Afiseaza mesajul pentru jucătorul 2
+    let message = "Felicitări, " + player2NameElement.textContent + "! Ai câștigat!";
+    let messageContainer = document.getElementById("messageContainer");
+    messageContainer.textContent = message;
+    messageContainer.style.display = "block";
+    noLoop(); // Oprește desenarea jocului
+    return; // Ieși din funcție pentru a nu afișa mesajul de rând al jucătorului
+  }
+
+  background(255);
+
+  // Afișează mesajul corespunzător
+  // displayMessage();
+}
+
+
+  
+let isPlaying = true;
 
 // Apelarea funcțiilor
 setPlayerNames();
@@ -65,7 +98,7 @@ function setup() {
 function draw() {
   background(245);
   showBoard();
-  displayMessage(); // Afișează mesajul corespunzător
+  drawGame();
 
   
   // Desenarea celulelor
@@ -134,13 +167,16 @@ function resetBoard() {
   player2Position = [8, 4];
   walls = [];
   
-  // Reseteaza culorile celulelor
+  // Resetează culorile celulelor
   for (let i = 0; i < tableSize; i++) {
     for (let j = 0; j < tableSize; j++) {
       squares[i][j].color = '#318247';
     }
   }
+
+  loop(); // Reluează desenarea jocului
 }
+
 
 // Adaugarea zidurilor
 function mouseClicked() {
@@ -165,7 +201,12 @@ function mouseClicked() {
 
 // Mutarea jucatorilor
 function keyPressed() {
+    // Verifică dacă jocul s-a încheiat
+    if (!isPlaying) {
+      return; // Nu face nimic dacă jocul s-a încheiat
+    }
   if (currentPlayer === 1) {
+    displayMessage();
     if (key === 'a' && player1Position[1] > 0 && !wallExists(player1Position[0], player1Position[1]-1, player1Position[0], player1Position[1])) {
       squares[player1Position[1]][player1Position[0]].color = '#318247';
       player1Position[1]--;
@@ -188,6 +229,7 @@ function keyPressed() {
       currentPlayer = 2; // Schimbă jucătorul curent la 2
     }
   } else if (currentPlayer === 2) {
+    displayMessage();
     if (key === 'j' && player2Position[1] > 0 && !wallExists(player2Position[0], player2Position[1]-1, player2Position[0], player2Position[1])) {
       squares[player2Position[1]][player2Position[0]].color = '#318247';
       player2Position[1]--;
