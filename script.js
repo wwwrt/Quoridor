@@ -81,6 +81,20 @@ function drawWalls() {
   }
 }
 
+// Funcția pentru plasarea zidurilor la clic
+function mouseClicked() {
+  // Verifică dacă jocul este în desfășurare și dacă este rândul jucătorului 1
+  if (isPlaying && currentPlayer === 1) {
+    // Obține coordonatele x și y ale clicului
+    const x = mouseX;
+    const y = mouseY;
+    
+    // Plasează zidul
+    placeWall(x, y);
+  }
+}
+
+
 // Funcție pentru plasarea zidurilor
 function placeWall(x, y) {
   // Calcularea poziției celulei în care a fost efectuat clicul
@@ -131,6 +145,10 @@ for (let i = 0; i < tableSize - 1; i++) {
     };
   }
 }
+
+
+canvas.mouseClicked(placeWall);
+
 
   createBoard();
 
