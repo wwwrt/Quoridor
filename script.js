@@ -57,13 +57,61 @@ text(message, width / 2, height - tableOffset + 60);
 
 }
   
+// Funcție pentru desenarea zidurilor
+function drawWalls() {
+  // Parcurge matricea de ziduri și desenează zidurile pe tabla de joc
+  for (let i = 0; i < tableSize - 1; i++) {
+    for (let j = 0; j < tableSize; j++) {
+      // Verifică dacă există un zid orizontal și desenează-l
+      if (walls[i][j].horizontal) {
+        const x1 = tableOffset + i * cellSize;
+        const x2 = x1 + cellSize;
+        const y = tableOffset + j * cellSize;
+        line(x1, y, x2, y);
+      }
+
+      // Verifică dacă există un zid vertical și desenează-l
+      if (walls[i][j].vertical) {
+        const x = tableOffset + i * cellSize;
+        const y1 = tableOffset + j * cellSize;
+        const y2 = y1 + cellSize;
+        line(x, y1, x, y2);
+      }
+    }
+  }
+}
+
+// Funcție pentru plasarea zidurilor
+function placeWall(x, y) {
+  // Calcularea poziției celulei în care a fost efectuat clicul
+  const i = Math.floor((x - tableOffset) / cellSize);
+  const j = Math.floor((y - tableOffset) / cellSize);
+
+  // Verificarea dacă poziția este validă și dacă există deja un zid în acea poziție
+  if (
+    i >= 0 &&
+    i < tableSize - 1 &&
+    j >= 0 &&
+    j < tableSize &&
+    !walls[i][j].horizontal &&
+    !walls[i][j].vertical
+  ) {
+    // Plasarea unui zid în matricea de ziduri
+    walls[i][j].horizontal = true;
+    walls[i][j].vertical = true;
+
+    // Redesenează tabla de joc pentru a afișa zidurile actualizate
+    drawTable();
+    drawWalls();
+  }
+}
+
 let isPlaying = true;
 
 // Variabilele pentru jucatori
 let player1Position = [0, 4]; // Pozitia jucatorului 1
 let player2Position = [8, 4]; // Pozitia jucatorului 2
 let currentPlayer = 1; // Jucătorul curent (1 sau 2)
-
 
 
 // Initializarea tabelului
@@ -84,7 +132,6 @@ for (let i = 0; i < tableSize - 1; i++) {
   }
 }
 
-  
   createBoard();
 
   // Adaugam butonul de resetare
@@ -93,7 +140,6 @@ for (let i = 0; i < tableSize - 1; i++) {
   resetButton.mousePressed(resetBoard);
 
 }
-
 
 
 // Desenarea tabelului
@@ -159,7 +205,6 @@ function displayMessage() {
 }
 
 
-
 // Resetarea tablei de joc la pozitia initiala
 function resetBoard() {
   player1Position = [0, 4];
@@ -175,8 +220,6 @@ function resetBoard() {
   isPlaying = true;
   loop(); // Reluează desenarea jocului
 }
-
-
 
 
 // Mutarea jucatorilor
@@ -263,8 +306,3 @@ function keyPressed() {
       }
     }
   }
-
-
-
-
-
