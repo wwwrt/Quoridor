@@ -2,6 +2,7 @@
 let tableSize = 9; // Marimea tablei
 let cellSize = 50; // Marimea unei celule
 let tableOffset = 100; // Offset-ul tablei
+let walls = []; // Matricea de ziduri
 
 
 let squares = []; 
@@ -63,9 +64,6 @@ let player1Position = [0, 4]; // Pozitia jucatorului 1
 let player2Position = [8, 4]; // Pozitia jucatorului 2
 let currentPlayer = 1; // Jucătorul curent (1 sau 2)
 
-// Variabilele pentru ziduri
-let walls = []; // Lista cu toate zidurile
-let currentWall = null; // Zidul curent
 
 
 // Initializarea tabelului
@@ -74,6 +72,19 @@ function setup() {
   player2Name = prompt("Introduceți numele jucătorului 2:"); // Prompt pentru numele jucătorului 2
 
   createCanvas(tableOffset * 2 + cellSize * tableSize, tableOffset * 2 + cellSize * tableSize);
+  
+  // Inițializarea matricei de ziduri
+for (let i = 0; i < tableSize - 1; i++) {
+  walls[i] = [];
+  for (let j = 0; j < tableSize; j++) {
+    walls[i][j] = {
+      horizontal: false,
+      vertical: false,
+    };
+  }
+}
+
+  
   createBoard();
 
   // Adaugam butonul de resetare
@@ -153,7 +164,7 @@ function displayMessage() {
 function resetBoard() {
   player1Position = [0, 4];
   player2Position = [8, 4];
-  walls = [];
+
   
   // Resetează culorile celulelor
   for (let i = 0; i < tableSize; i++) {
@@ -166,25 +177,6 @@ function resetBoard() {
 }
 
 
-// Adaugarea zidurilor
-function mouseClicked() {
-  if (currentWall === null) {
-    // Daca nu exista un zid curent, creaza unul nou
-    let x = Math.floor(mouseX / cellSize);
-    let y = Math.floor(mouseY / cellSize);
-    currentWall = [x, y];
-  } else {
-    // Daca exista deja un zid curent, finalizeaza-l
-    let x = Math.floor(mouseX / cellSize);
-    let y = Math.floor(mouseY / cellSize);
-    let newWall = [currentWall[0], currentWall[1], x, y];
-    if (!wallExists(newWall[0], newWall[1], newWall[2], newWall[3])) {
-      // Daca zidul nu exista deja, adauga-l in lista de ziduri
-      walls.push(newWall);
-    }
-    currentWall = null;
-  }
-}
 
 
 // Mutarea jucatorilor
@@ -193,64 +185,86 @@ function keyPressed() {
     if (!isPlaying) {
       return; // Nu face nimic dacă jocul s-a încheiat
     }
-  if (currentPlayer === 1) {
-    displayMessage();
-    if (key === 'a' && player1Position[1] > 0 && !wallExists(player1Position[0], player1Position[1]-1, player1Position[0], player1Position[1])) {
-      squares[player1Position[1]][player1Position[0]].color = '#318247';
-      player1Position[1]--;
-      squares[player1Position[1]][player1Position[0]].color = 'blue';
-      currentPlayer = 2; // Schimbă jucătorul curent la 2
-    } else if (key === 'd' && player1Position[1] < tableSize - 1 && !wallExists(player1Position[0], player1Position[1], player1Position[0], player1Position[1]+1)) {
-      squares[player1Position[1]][player1Position[0]].color = '#318247';
-      player1Position[1]++;
-      squares[player1Position[1]][player1Position[0]].color = 'blue';
-      currentPlayer = 2; // Schimbă jucătorul curent la 2
-    } else if (key === 'w' && player1Position[0] > 0 && !wallExists(player1Position[0]-1, player1Position[1], player1Position[0], player1Position[1])) {
-      squares[player1Position[1]][player1Position[0]].color = '#318247';
-      player1Position[0]--;
-      squares[player1Position[1]][player1Position[0]].color = 'blue';
-      currentPlayer = 2; // Schimbă jucătorul curent la 2
-    } else if (key === 's' && player1Position[0] < tableSize - 1 && !wallExists(player1Position[0], player1Position[1], player1Position[0]+1, player1Position[1])) {
-      squares[player1Position[1]][player1Position[0]].color = '#318247';
-      player1Position[0]++;
-      squares[player1Position[1]][player1Position[0]].color = 'blue';
-      currentPlayer = 2; // Schimbă jucătorul curent la 2
-    }
-  } else if (currentPlayer === 2) {
-    displayMessage();
-    if (key === 'j' && player2Position[1] > 0 && !wallExists(player2Position[0], player2Position[1]-1, player2Position[0], player2Position[1])) {
-      squares[player2Position[1]][player2Position[0]].color = '#318247';
-      player2Position[1]--;
-      squares[player2Position[1]][player2Position[0]].color = 'red';
-      currentPlayer = 1; // Schimbă jucătorul curent la 1
-    } else if (key === 'l' && player2Position[1] < tableSize - 1 && !wallExists(player2Position[0], player2Position[1], player2Position[0], player2Position[1]+1)) {
-      squares[player2Position[1]][player2Position[0]].color = '#318247';
-      player2Position[1]++;
-      squares[player2Position[1]][player2Position[0]].color = 'red';
-      currentPlayer = 1; // Schimbă jucătorul curent la 1
-    } else if (key === 'i' && player2Position[0] > 0 && !wallExists(player2Position[0]-1, player2Position[1], player2Position[0], player2Position[1])) {
-      squares[player2Position[1]][player2Position[0]].color = '#318247';
-      player2Position[0]--;
-      squares[player2Position[1]][player2Position[0]].color = 'red';
-      currentPlayer = 1; // Schimbă jucătorul curent la 1
-    } else if (key == 'k' && player2Position[0] < tableSize - 1 && !wallExists(player2Position[0], player2Position[1], player2Position[0]+1, player2Position[1])) {
-      squares[player2Position[1]][player2Position[0]].color='#318247';
-      player2Position[0]++;
-      squares[player2Position[1]][player2Position[0]].color='red';
-      currentPlayer = 1; // Schimbă jucătorul curent la 1
+    if (currentPlayer === 1) {
+      if (keyCode === LEFT_ARROW && player1Position[1] > 0) {
+        if (player1Position[0] === player2Position[0] && player1Position[1] - 1 === player2Position[1] && player2Position[1] > 0) {
+          // Jucătorul 1 sare peste jucătorul 2
+          player2Position[1]-2;
+        }
+        squares[player1Position[1]][player1Position[0]].color = '#318247';
+        player1Position[1]--;
+        squares[player1Position[1]][player1Position[0]].color = 'blue';
+        currentPlayer = 2;
+      } else if (keyCode === RIGHT_ARROW && player1Position[1] < tableSize - 1) {
+        if (player1Position[0] === player2Position[0] && player1Position[1] + 1 === player2Position[1] && player2Position[1] < tableSize - 1 ) {
+          // Jucătorul 1 sare peste jucătorul 2
+          player2Position[1]+2;
+        }
+        squares[player1Position[1]][player1Position[0]].color = '#318247';
+        player1Position[1]++;
+        squares[player1Position[1]][player1Position[0]].color = 'blue';
+        currentPlayer = 2;
+      } else if (keyCode === UP_ARROW && player1Position[0] > 0) {
+        if (player1Position[0] - 1 === player2Position[0] && player1Position[1] === player2Position[1] && player2Position[0] > 0) {
+          // Jucătorul 1 sare peste jucătorul 2
+          player2Position[0]-2;
+        }
+        squares[player1Position[1]][player1Position[0]].color = '#318247';
+        player1Position[0]--;
+        squares[player1Position[1]][player1Position[0]].color = 'blue';
+        currentPlayer = 2;
+      } else if (keyCode === DOWN_ARROW && player1Position[0] < tableSize - 1) {
+        if (player1Position[0] + 1 === player2Position[0] && player1Position[1] === player2Position[1] && player2Position[0] < tableSize - 1) {
+          // Jucătorul 1 sare peste jucătorul 2
+          player2Position[0]+2;
+        }
+        squares[player1Position[1]][player1Position[0]].color = '#318247';
+        player1Position[0]++;
+        squares[player1Position[1]][player1Position[0]].color = 'blue';
+        currentPlayer = 2;
+      }
+    } else if (currentPlayer === 2) {
+      if (key === 'a' && player2Position[1] > 0) {
+        if (player2Position[0] === player1Position[0] && player2Position[1] - 1 === player1Position[1] && player1Position[1] > 0) {
+          // Jucătorul 2 sare peste jucătorul 1
+          player1Position[1]-2;
+        }
+        squares[player2Position[1]][player2Position[0]].color = '#318247';
+        player2Position[1]--;
+        squares[player2Position[1]][player2Position[0]].color = 'red';
+        currentPlayer = 1;
+      } else if (key === 'd' && player2Position[1] < tableSize - 1) {
+        if (player2Position[0] === player1Position[0] && player2Position[1] + 1 === player1Position[1] && player1Position[1] < tableSize - 1 ) {
+          // Jucătorul 2 sare peste jucătorul 1
+          player1Position[1]+2;
+        }
+        squares[player2Position[1]][player2Position[0]].color = '#318247';
+        player2Position[1]++;
+        squares[player2Position[1]][player2Position[0]].color = 'red';
+        currentPlayer = 1;
+      } else if (key === 'w' && player2Position[0] > 0) {
+        if (player2Position[0] - 1 === player1Position[0] && player2Position[1] === player1Position[1] && player1Position[0] > 0 ) {
+          // Jucătorul 2 sare peste jucătorul 1
+          player1Position[0]-2;
+        }
+        squares[player2Position[1]][player2Position[0]].color = '#318247';
+        player2Position[0]--;
+        squares[player2Position[1]][player2Position[0]].color = 'red';
+        currentPlayer = 1;
+      } else if (key === 's' && player2Position[0] < tableSize - 1) {
+        if (player2Position[0] + 1 === player1Position[0] && player2Position[1] === player1Position[1] && player1Position[0] < tableSize - 1 ) {
+          // Jucătorul 2 sare peste jucătorul 1
+          player1Position[0]+2;
+        }
+        squares[player2Position[1]][player2Position[0]].color = '#318247';
+        player2Position[0]++;
+        squares[player2Position[1]][player2Position[0]].color = 'red';
+        currentPlayer = 1;
+      }
     }
   }
-}
 
-// Verifica daca un zid exista intre doua celule
-function wallExists(x1, y1, x2, y2) {
-  for (let wall of walls) {
-    if ((wall[0][0] == x1 && wall[0][1] == y1 && wall[1][0] == x2 && wall[1][1] == y2) ||
-    (wall[0][0] == x2 && wall[0][1] == y2 && wall[1][0] == x1 && wall[1][1] == y1)) {
-     return true;
-   }
-  }
-  return false;
-}
+
+
 
 
