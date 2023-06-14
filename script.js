@@ -3,9 +3,10 @@ let tableSize = 9; // Marimea tablei
 let cellSize = 50; // Marimea unei celule
 let tableOffset = 100; // Offset-ul tablei
 
-
-
 let squares = []; 
+let wallsVertical = [];
+let wallsHorizontal = [];
+
 
 const player1Input = document.getElementById("player1");
 const player2Input = document.getElementById("player2");
