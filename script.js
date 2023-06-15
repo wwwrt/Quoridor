@@ -254,39 +254,24 @@ function keyPressed() {
     if (!isPlaying) {
       return; // Nu face nimic dacă jocul s-a încheiat
     }
+    
     if (currentPlayer === 1) {
       if (keyCode === UP_ARROW && player1Position[1] > 0) {
-        if (player1Position[0] === player2Position[0] && player1Position[1] - 1 === player2Position[1] && player2Position[1] > 0) {
-          // Jucătorul 1 sare peste jucătorul 2
-          // player2Position[1]-=2;
-        }
         squares[player1Position[1]][player1Position[0]].color = '#318247';
         player1Position[1]--;
         squares[player1Position[1]][player1Position[0]].color = 'blue';
         currentPlayer = 2;
       } else if (keyCode === DOWN_ARROW && player1Position[1] < tableSize - 1) {
-        if (player1Position[0] === player2Position[0] && player1Position[1] + 1 === player2Position[1] && player2Position[1] < tableSize - 1 ) {
-          // Jucătorul 1 sare peste jucătorul 2
-          // player2Position[1]+=2;
-        }
         squares[player1Position[1]][player1Position[0]].color = '#318247';
         player1Position[1]++;
         squares[player1Position[1]][player1Position[0]].color = 'blue';
         currentPlayer = 2;
       } else if (keyCode === LEFT_ARROW && player1Position[0] > 0) {
-        if (player1Position[0] - 1 === player2Position[0] && player1Position[1] === player2Position[1] && player2Position[0] > 0) {
-          // Jucătorul 1 sare peste jucătorul 2
-          // player2Position[0]-=2;
-        }
         squares[player1Position[1]][player1Position[0]].color = '#318247';
         player1Position[0]--;
         squares[player1Position[1]][player1Position[0]].color = 'blue';
         currentPlayer = 2;
       } else if (keyCode === RIGHT_ARROW && player1Position[0] < tableSize - 1) {
-        if (player1Position[0] + 1 === player2Position[0] && player1Position[1] === player2Position[1] && player2Position[0] < tableSize - 1) {
-          // Jucătorul 1 sare peste jucătorul 2
-          // player2Position[0]+=2;
-        }
         squares[player1Position[1]][player1Position[0]].color = '#318247';
         player1Position[0]++;
         squares[player1Position[1]][player1Position[0]].color = 'blue';
@@ -294,41 +279,27 @@ function keyPressed() {
       }
     } else if (currentPlayer === 2) {
       if (key === 'w' && player2Position[1] > 0) {
-        if (player2Position[0] === player1Position[0] && player2Position[1] - 1 === player1Position[1] && player1Position[1] > 0) {
-          // Jucătorul 2 sare peste jucătorul 1
-          // player1Position[1]-=2;
-        }
         squares[player2Position[1]][player2Position[0]].color = '#318247';
         player2Position[1]--;
         squares[player2Position[1]][player2Position[0]].color = 'red';
         currentPlayer = 1;
       } else if (key === 's' && player2Position[1] < tableSize - 1) {
-        if (player2Position[0] === player1Position[0] && player2Position[1] + 1 === player1Position[1] && player1Position[1] < tableSize - 1 ) {
-          // Jucătorul 2 sare peste jucătorul 1
-          // player1Position[1]+=2;
-        }
         squares[player2Position[1]][player2Position[0]].color = '#318247';
         player2Position[1]++;
         squares[player2Position[1]][player2Position[0]].color = 'red';
         currentPlayer = 1;
       } else if (key === 'a' && player2Position[0] > 0) {
-        if (player2Position[0] - 1 === player1Position[0] && player2Position[1] === player1Position[1] && player1Position[0] > 0 ) {
-          // Jucătorul 2 sare peste jucătorul 1
-          // player1Position[0]-=2;
-        }
         squares[player2Position[1]][player2Position[0]].color = '#318247';
         player2Position[0]--;
         squares[player2Position[1]][player2Position[0]].color = 'red';
         currentPlayer = 1;
       } else if (key === 'd' && player2Position[0] < tableSize - 1) {
-        if (player2Position[0] + 1 === player1Position[0] && player2Position[1] === player1Position[1] && player1Position[0] < tableSize - 1 ) {
-          // Jucătorul 2 sare peste jucătorul 1
-          // player1Position[0]+=2;
-        }
         squares[player2Position[1]][player2Position[0]].color = '#318247';
         player2Position[0]++;
         squares[player2Position[1]][player2Position[0]].color = 'red';
         currentPlayer = 1;
-      }
-    }
-  }
+      }
+    }
+  }
+  
+  
