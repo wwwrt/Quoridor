@@ -53,9 +53,22 @@ function drawGame() {
     noLoop(); // Oprește desenarea jocului
     return; // Ieși din funcție pentru a nu afișa mesajul de rând al jucătorului
   }
-  // Afișează mesajul corespunzător
-  // displayMessage();
+ 
+  // Afișează mesajul pentru rândul fiecăruia
+  if (currentPlayer === 1) {
+    message =  player1Name + ", e rândul tău!!";
+    fill('black');
+    textSize(30);
+    textAlign(CENTER, BOTTOM);
+    text(message, width / 2, tableOffset - 90);
+  }
 
+  if (currentPlayer === 2) {
+    fill('black');
+    textSize(30);
+    textAlign(CENTER, TOP);
+    text(message, width / 2, height - tableOffset + 90);
+  }
 
 }
 
@@ -216,18 +229,6 @@ function showBoard() {
 }
 
 
-function displayMessage() {
-  let message = "";
-  if (currentPlayer === 1) {
-    message = player1NameElement.textContent + ", este rândul tău!"; // Mesaj pentru jucătorul 1
-  } else if (currentPlayer === 2) {
-    message = player2NameElement.textContent + ", este rândul tău!"; // Mesaj pentru jucătorul 2
-  }
-  fill(255);
-  textSize(20);
-  text(message, 10, height + 40);
-}
-
 
 // Resetarea tablei de joc la pozitia initiala
 function resetBoard() {
@@ -255,9 +256,23 @@ function resetBoard() {
       wallsHorizontal[i][j].color = 'white';
     }
   }
+
+  // Resetarea culorilor pătrățelelor mici
+  for (let i = 0; i < tableSize - 1; i++) {
+    for (let j = 0; j < tableSize -1 ; j++) {
+     miniSquares[i][j].color = 'white';
+    }
+  }
+
   isPlaying = true;
   loop(); // Reluează desenarea jocului
 }
+
+function startComputerGame() {
+  againstComputer = true; // Setează o variabilă pentru a indica jocul împotriva computerului
+  makeMoveComputer(); // Inițiază prima mutare a computerului
+}
+
 
 
 // Mutarea jucatorilor
