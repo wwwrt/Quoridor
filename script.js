@@ -112,7 +112,7 @@ function mouseClicked() {
       let wall = wallsHorizontal[i][j];
       if (
         mouseX > wall.x && mouseX < wall.x + cellSize && mouseY > wall.y && mouseY < wall.y + 10
-      ) { wall.color = "black"; }
+      ) { wall.color = "black"; wallsHorizontal[i][j+1].color='black'; }
     }
   }
 }
