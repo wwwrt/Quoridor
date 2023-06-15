@@ -128,35 +128,36 @@ function createBoard() {
     squares.push([]);
     for (let j = 0; j < tableSize; j++) {
       squares[i].push({
-        x: j * (cellSize+10) + tableOffset/1.5,
-        y: i * (cellSize+10) + tableOffset/1.5,
-        color: '#318247'
+        x: j * (cellSize + 10) + tableOffset / 1.5,
+        y: i * (cellSize + 10) + tableOffset / 1.5,
+        color: "#318247"
       });
     }
   }
-  let range = tableSize -1;
-  for (let i = 0; i < tableSize; i++) {
+  let range = tableSize - 1;
+  for (let i = 0; i < tableSize-1; i++) {
     wallsHorizontal.push([]);
     for (let j = 0; j < tableSize; j++) {
       wallsHorizontal[i].push({
         x: j * 60 + 100,
         y: i * 60 + 150,
-        color: 'red'
+        color: "red"
       });
     }
   }
 
   for (let i = 0; i < tableSize; i++) {
     wallsVertical.push([]);
-    for (let j = 0; j < tableSize ; j++) {
+    for (let j = 0; j < tableSize-1; j++) {
       wallsVertical[i].push({
         x: j * 60 + 150,
         y: i * 60 + 100,
-        color: 'red'
+        color: "red"
       });
     }
   }
 }
+
 
 function showBoard() {
   for (let i = 0; i < tableSize; i++) {
@@ -167,13 +168,13 @@ function showBoard() {
   }
 
   for (let i = 0; i < tableSize; i++) {
-    for (let j = 0; j < tableSize; j++) {
+    for (let j = 0; j < tableSize-1; j++) {
       fill(wallsVertical[i][j].color);
       rect(wallsVertical[i][j].x,wallsVertical[i][j].y , 10, cellSize);
     }
   }
 
-  for (let i = 0; i < tableSize; i++) {
+  for (let i = 0; i < tableSize-1; i++) {
     for (let j = 0; j < tableSize; j++) {
       fill(wallsHorizontal[i][j].color);
       rect(wallsHorizontal[i][j].x,wallsHorizontal[i][j].y , cellSize, 10);
@@ -226,6 +227,20 @@ function resetBoard() {
       squares[i][j].color = '#318247';
     }
   }
+  
+  // Resetarea culorilor peretilor verticali
+for (let i = 0; i < tableSize; i++) {
+  for (let j = 0; j < tableSize-1; j++) {
+    wallsVertical[i][j].color = 'red';
+  }
+}
+
+// Resetarea culorilor peretilor orizontali
+for (let i = 0; i < tableSize-1; i++) {
+  for (let j = 0; j < tableSize; j++) {
+    wallsHorizontal[i][j].color = 'red';
+  }
+}
   isPlaying = true;
   loop(); // Reluează desenarea jocului
 }
@@ -243,7 +258,7 @@ function keyPressed() {
       if (keyCode === UP_ARROW && player1Position[1] > 0) {
         if (player1Position[0] === player2Position[0] && player1Position[1] - 1 === player2Position[1] && player2Position[1] > 0) {
           // Jucătorul 1 sare peste jucătorul 2
-          player2Position[1]-2;
+          // player2Position[1]-=2;
         }
         squares[player1Position[1]][player1Position[0]].color = '#318247';
         player1Position[1]--;
@@ -252,7 +267,7 @@ function keyPressed() {
       } else if (keyCode === DOWN_ARROW && player1Position[1] < tableSize - 1) {
         if (player1Position[0] === player2Position[0] && player1Position[1] + 1 === player2Position[1] && player2Position[1] < tableSize - 1 ) {
           // Jucătorul 1 sare peste jucătorul 2
-          player2Position[1]+2;
+          // player2Position[1]+=2;
         }
         squares[player1Position[1]][player1Position[0]].color = '#318247';
         player1Position[1]++;
@@ -261,7 +276,7 @@ function keyPressed() {
       } else if (keyCode === LEFT_ARROW && player1Position[0] > 0) {
         if (player1Position[0] - 1 === player2Position[0] && player1Position[1] === player2Position[1] && player2Position[0] > 0) {
           // Jucătorul 1 sare peste jucătorul 2
-          player2Position[0]-2;
+          // player2Position[0]-=2;
         }
         squares[player1Position[1]][player1Position[0]].color = '#318247';
         player1Position[0]--;
@@ -270,7 +285,7 @@ function keyPressed() {
       } else if (keyCode === RIGHT_ARROW && player1Position[0] < tableSize - 1) {
         if (player1Position[0] + 1 === player2Position[0] && player1Position[1] === player2Position[1] && player2Position[0] < tableSize - 1) {
           // Jucătorul 1 sare peste jucătorul 2
-          player2Position[0]+2;
+          // player2Position[0]+=2;
         }
         squares[player1Position[1]][player1Position[0]].color = '#318247';
         player1Position[0]++;
@@ -281,7 +296,7 @@ function keyPressed() {
       if (key === 'w' && player2Position[1] > 0) {
         if (player2Position[0] === player1Position[0] && player2Position[1] - 1 === player1Position[1] && player1Position[1] > 0) {
           // Jucătorul 2 sare peste jucătorul 1
-          player1Position[1]-2;
+          // player1Position[1]-=2;
         }
         squares[player2Position[1]][player2Position[0]].color = '#318247';
         player2Position[1]--;
@@ -290,7 +305,7 @@ function keyPressed() {
       } else if (key === 's' && player2Position[1] < tableSize - 1) {
         if (player2Position[0] === player1Position[0] && player2Position[1] + 1 === player1Position[1] && player1Position[1] < tableSize - 1 ) {
           // Jucătorul 2 sare peste jucătorul 1
-          player1Position[1]+2;
+          // player1Position[1]+=2;
         }
         squares[player2Position[1]][player2Position[0]].color = '#318247';
         player2Position[1]++;
@@ -299,7 +314,7 @@ function keyPressed() {
       } else if (key === 'a' && player2Position[0] > 0) {
         if (player2Position[0] - 1 === player1Position[0] && player2Position[1] === player1Position[1] && player1Position[0] > 0 ) {
           // Jucătorul 2 sare peste jucătorul 1
-          player1Position[0]-2;
+          // player1Position[0]-=2;
         }
         squares[player2Position[1]][player2Position[0]].color = '#318247';
         player2Position[0]--;
@@ -308,7 +323,7 @@ function keyPressed() {
       } else if (key === 'd' && player2Position[0] < tableSize - 1) {
         if (player2Position[0] + 1 === player1Position[0] && player2Position[1] === player1Position[1] && player1Position[0] < tableSize - 1 ) {
           // Jucătorul 2 sare peste jucătorul 1
-          player1Position[0]+2;
+          // player1Position[0]+=2;
         }
         squares[player2Position[1]][player2Position[0]].color = '#318247';
         player2Position[0]++;
