@@ -9,6 +9,8 @@ let squares = [];
 let wallsVertical = [];
 let wallsHorizontal = [];
 
+let showWalls = true;
+
 const player1Input = document.getElementById("player1");
 const player2Input = document.getElementById("player2");
 
@@ -34,7 +36,7 @@ let message = "Felicitări, " + player1Name + "! Ai câștigat!";
 fill('black');
 textSize(30);
 textAlign(CENTER, BOTTOM);
-text(message, width / 2, tableOffset - 60);
+text(message, width / 2, tableOffset - 90);
     noLoop(); // Oprește desenarea jocului
     return; // Ieși din funcție pentru a nu afișa mesajul de rând al jucătorului
   }
@@ -49,7 +51,7 @@ message = "Felicitări, " + player2Name + "! Ai câștigat!";
 fill('black');
 textSize(30);
 textAlign(CENTER, TOP);
-text(message, width / 2, height - tableOffset + 60);
+text(message, width / 2, height - tableOffset + 90);
     noLoop(); // Oprește desenarea jocului
     return; // Ieși din funcție pentru a nu afișa mesajul de rând al jucătorului
   }
@@ -156,6 +158,25 @@ function showBoard() {
       rect(wallsHorizontal[i][j].x,wallsHorizontal[i][j].y , cellSize, 10);
     }
   }
+
+  if (showWalls) {
+    // Desenează zidurile verticale
+    for (let i = 0; i < tableSize; i++) {
+      for (let j = 0; j < tableSize; j++) {
+        fill(wallsVertical[i][j].color);
+        rect(wallsVertical[i][j].x, wallsVertical[i][j].y, 10, cellSize);
+      }
+    }
+
+    // Desenează zidurile orizontale
+    for (let i = 0; i < tableSize; i++) {
+      for (let j = 0; j < tableSize; j++) {
+        fill(wallsHorizontal[i][j].color);
+        rect(wallsHorizontal[i][j].x, wallsHorizontal[i][j].y, cellSize, 10);
+      }
+    }
+  }
+
      // Desenează numele jucătorului 1 în partea de sus
   fill(0);
   textSize(25);
@@ -170,7 +191,28 @@ function showBoard() {
   textAlign(CENTER, BOTTOM);
   noStroke();
   text(player2Name, width / 2, height - 80);
+
 }
+
+function mouseClicked() {
+  if (mouseX > tableOffset && mouseX < tableOffset + cellSize * tableSize && mouseY > tableOffset && mouseY < tableOffset + cellSize * tableSize) {
+    let i = Math.floor((mouseY - tableOffset) / cellSize);
+    let j = Math.floor((mouseX - tableOffset) / cellSize);
+
+    if (mouseButton === LEFT) {
+      // Adaugă zidul vertical
+      if (j < tableSize - 1) {
+        wallsVertical[i][j].color = showWalls ? 'red' : 'white';
+      }
+    } else if (mouseButton === RIGHT) {
+      // Adaugă zidul orizontal
+      if (i < tableSize - 1) {
+        wallsHorizontal[i][j].color = showWalls ? 'red' : 'white';
+      }
+    }
+  }
+}
+
 
 function displayMessage() {
   let message = "";
