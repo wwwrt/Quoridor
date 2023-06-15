@@ -21,7 +21,7 @@ function setPlayerNames() {
 }
 
 // Desenarea jocului pe canvas
-function drawGame() {
+function drawGame() { 
   // Verifică dacă jucătorul 1 a ajuns în capătul opus
   if (player1Position[0] === tableSize - 1) {
     // Actualizează variabila isPlaying
