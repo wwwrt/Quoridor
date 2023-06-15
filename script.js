@@ -179,8 +179,6 @@ function createBoard() {
 }
 
 
-
-
 function showBoard() {
   for (let i = 0; i < tableSize; i++) {
     for (let j = 0; j < tableSize; j++) {
@@ -230,7 +228,6 @@ function showBoard() {
 }
 
 
-
 // Resetarea tablei de joc la pozitia initiala
 function resetBoard() {
   player1Position = [4, 0];
@@ -273,13 +270,6 @@ function startComputerGame() {
   againstComputer = true; // Setează o variabilă pentru a indica jocul împotriva computerului
   makeMoveComputer(); // Inițiază prima mutare a computerului
 }
-
-
-function startComputerGame() {
-  againstComputer = true; // Setează o variabilă pentru a indica jocul împotriva computerului
-  makeMoveComputer(); // Inițiază prima mutare a computerului
-}
-
 
 
 // Mutarea jucatorilor
@@ -424,7 +414,37 @@ function makeMoveComputer() {
       currentPlayer = 1;
     }
   }
-}
+   // Randomly choose a wall to place
+   let wallType = Math.random() < 0.5 ? "horizontal" : "vertical";
+   let wallIndex = Math.floor(Math.random() * (tableSize - 1));
+ 
+   // Check if the chosen wall is already placed
+   let wall;
+   if (wallType === "horizontal") {
+     wall = wallsHorizontal[wallIndex][player2Position[0]];
+   } else {
+     wall = wallsVertical[player2Position[1]][wallIndex];
+   }
+   if (wall.color === "black") {
+     // The chosen wall is already placed, make another move
+     makeMoveComputer();
+     return;
+   }
+ 
+   // Place the chosen wall
+   wall.color = "black";
+ 
+   // Update the mini-squares
+   if (wallType === "horizontal") {
+     miniSquares[wallIndex][player2Position[0]].color = "black";
+   } else {
+     miniSquares[player2Position[1]][wallIndex].color = "black";
+   }
+ 
+   // Switch the current player
+   currentPlayer = 1;
+ }
+
 
 function getValidMoves(x, y) {
   let validMoves = [];
