@@ -25,7 +25,7 @@ function setPlayerNames() {
 // Desenarea jocului pe canvas
 function drawGame() {
   // Verifică dacă jucătorul 1 a ajuns în capătul opus
-  if (player1Position[0] === tableSize - 1) {
+  if (player1Position[1] === tableSize - 1) {
     // Actualizează variabila isPlaying
     isPlaying = false;
 
@@ -40,7 +40,7 @@ text(message, width / 2, tableOffset - 60);
   }
 
   // Verifică dacă jucătorul 2 a ajuns în capătul opus
-  if (player2Position[0] === 0) {
+  if (player2Position[1] === 0) {
     // Actualizează variabila isPlaying
     isPlaying = false;
 
@@ -98,9 +98,7 @@ function draw() {
   // strokeWeight(10);iop
 
 }
-// let tableSize = 9; // Marimea tablei
-// let cellSize = 50; // Marimea unei celule
-// let tableOffset = 100; // Offset-ul tablei
+
 
 function createBoard() {
   for (let i = 0; i < tableSize; i++) {
@@ -190,8 +188,8 @@ function displayMessage() {
 
 // Resetarea tablei de joc la pozitia initiala
 function resetBoard() {
-  player1Position = [0, 4];
-  player2Position = [8, 4];
+  player1Position = [4, 0];
+  player2Position = [4, 8];
 
   
   // Resetează culorile celulelor
