@@ -71,6 +71,13 @@ function drawGame() {
     text(message, width / 2, height - tableOffset + 90);
   }
 
+  // Verificați dacă jocul este împotriva calculatorului și dacă este rândul calculatorului să mute
+  if (againstComputer && currentPlayer === computerPlayer) {
+  makeMoveComputer();
+  return; // Ieșiți din funcție pentru a nu afișa mesajul de rând al jucătorului
+}
+
+
 }
 
 let isPlaying = true;
@@ -80,7 +87,8 @@ let player1Position = [4, 0]; // Pozitia jucatorului 1
 let player2Position = [4, 8]; // Pozitia jucatorului 2
 let currentPlayer = 1; // Jucătorul curent (1 sau 2)
 
-
+let againstComputer = false;
+let computerPlayer = 2;
 
 // Initializarea tabelului
 function setup() {
@@ -90,15 +98,16 @@ function setup() {
   createCanvas(tableOffset * 2 + cellSize * tableSize, tableOffset * 2 + cellSize * tableSize);
   createBoard();
 
-  // Adaugam butonul de resetare
+  // Adaug butonul de resetare
   let resetButton = createButton('Reset');
   resetButton.position(tableOffset * 2 + cellSize * tableSize - 60, 10);
   resetButton.mousePressed(resetBoard);
-
+    // Permit utilizatorului să joace împotriva calculatorului
+    let againstComputerButton = createButton('Joacă împotriva calculatorului (C)');
+    againstComputerButton.mousePressed(startAgainstComputer);
+    
 }
-
-
-// Desenarea tabelului
+  // Desenarea tabelului
 function draw() {
   background(245);
   setPlayerNames();
@@ -108,9 +117,16 @@ function draw() {
 
   // Desenarea celulelor
   noStroke();
-  // strokeWeight(10);iop
-
 }
+
+  function startAgainstComputer() {
+    againstComputer = true;
+    // Selectez aleatoriu dacă jucătorul uman începe sau calculatorul începe
+    currentPlayer = Math.random() < 0.5 ? 1 : computerPlayer;
+    drawGame();
+  }
+
+
 
 function mouseClicked() {
   for (let i = 0; i < wallsVertical.length; i++) {
@@ -179,8 +195,6 @@ function createBoard() {
 }
 
 
-
-
 function showBoard() {
   for (let i = 0; i < tableSize; i++) {
     for (let j = 0; j < tableSize; j++) {
@@ -212,7 +226,7 @@ function showBoard() {
 
 
 
-  // Desenează numele jucătorului 1 în partea de sus
+  // Desenez numele jucătorului 1 în partea de sus
   fill(0);
   textSize(25);
   textAlign(CENTER, BOTTOM);
@@ -220,7 +234,7 @@ function showBoard() {
   text(player1Name, width / 2, tableOffset - 50);
 
 
-  // Desenează numele jucătorului 2 în partea de jos
+  // Desenez numele jucătorului 2 în partea de jos
   fill(0);
   textSize(25);
   textAlign(CENTER, BOTTOM);
@@ -270,15 +284,15 @@ function resetBoard() {
 }
 
 function startComputerGame() {
-  againstComputer = true; // Setează o variabilă pentru a indica jocul împotriva computerului
-  makeMoveComputer(); // Inițiază prima mutare a computerului
+  againstComputer = true; // Setez o variabilă pentru a indica jocul împotriva computerului
+  makeMoveComputer(); // Inițiez prima mutare a computerului
 }
 
 
 
 // Mutarea jucatorilor
 function keyPressed() {
-  // Verifică dacă jocul s-a încheiat
+  // Verific dacă jocul s-a încheiat
   if (!isPlaying) {
     return; // Nu face nimic dacă jocul s-a încheiat
   }
@@ -400,4 +414,69 @@ function keyPressed() {
       }
     }
   }
+}
+
+function isValidMove(x, y) {
+  // Verific dacă poziția este în limitele tablei
+  if (x < 0 || x >= tableSize || y < 0 || y >= tableSize) {
+    return false;
+  }
+  
+  // Verific dacă poziția nu este ocupată de un obstacol sau de alt jucător
+  if (squares[y][x].color === 'red' || squares[y][x].color === 'blue') {
+    return false;
+  }
+  
+  return true;
+}
+
+
+function makeMoveComputer() {
+  
+  currentPlayer = 1;
+  //<utare aleatoare pentru calculator
+  let randomMove = getRandomMove();
+  let moveX = randomMove[0];
+  let moveY = randomMove[1];
+  // Verifica dacă mutarea este validă
+  if (isValidMove(player1Position[0] + moveX, player1Position[1] + moveY)) {
+    // Actualizez poziția jucătorului uman
+    player1Position[0] += moveX;
+    player1Position[1] += moveY;
+    // Actualizez culoarea în pătratul nou
+    squares[player1Position[1]][player1Position[0]].color = 'blue';
+  }
+  // Jocul actualizat pe canvas
+  drawGame();
+  // Schimb player1Position înapoi la poziția jucătorului uman pentru a menține coerența
+  player1Position[0] -= moveX;
+  player1Position[1] -= moveY;
+}
+
+function getRandomMove() {
+  let possibleMoves = [];
+
+  // Verific dacă calculatorul poate muta în sus
+  if (player2Position[1] > 0 && squares[player2Position[1] - 1][player2Position[0]].color !== 'red') {
+    possibleMoves.push([-1, 0]); // Adăuga mutarea în sus în lista de mutări posibile
+  }
+
+  // Verifica dacă calculatorul poate muta în jos
+  if (player2Position[1] < tableSize - 1 && squares[player2Position[1] + 1][player2Position[0]].color !== 'red') {
+    possibleMoves.push([1, 0]); // Adăug mutarea în jos în lista de mutări posibile
+  }
+
+  // Verific dacă calculatorul poate muta la stânga
+  if (player2Position[0] > 0 && squares[player2Position[1]][player2Position[0] - 1].color !== 'red') {
+    possibleMoves.push([0, -1]); // Adăug mutarea la stânga în lista de mutări posibile
+  }
+
+  // Verific dacă calculatorul poate muta la dreapta
+  if (player2Position[0] < tableSize - 1 && squares[player2Position[1]][player2Position[0] + 1].color !== 'red') {
+    possibleMoves.push([0, 1]); // Adăug mutarea la dreapta în lista de mutări posibile
+  }
+
+  // Aleg o mutare aleatoare din lista de mutări posibile
+  let randomIndex = Math.floor(Math.random() * possibleMoves.length);
+  return possibleMoves[randomIndex];
 }
