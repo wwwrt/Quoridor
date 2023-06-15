@@ -403,6 +403,8 @@ function keyPressed() {
   }
 }
 
+let computerWallCount = 0;
+
 function makeMoveComputer() {
   if (currentPlayer === 2 && isPlaying) {
     let validMoves = getValidMoves(player2Position[0], player2Position[1]);
@@ -414,36 +416,51 @@ function makeMoveComputer() {
       currentPlayer = 1;
     }
   }
-   // Randomly choose a wall to place
-   let wallType = Math.random() < 0.5 ? "horizontal" : "vertical";
-   let wallIndex = Math.floor(Math.random() * (tableSize - 1));
- 
-   // Check if the chosen wall is already placed
-   let wall;
-   if (wallType === "horizontal") {
-     wall = wallsHorizontal[wallIndex][player2Position[0]];
-   } else {
-     wall = wallsVertical[player2Position[1]][wallIndex];
-   }
-   if (wall.color === "black") {
-     // The chosen wall is already placed, make another move
-     makeMoveComputer();
-     return;
-   }
- 
-   // Place the chosen wall
-   wall.color = "black";
- 
-   // Update the mini-squares
-   if (wallType === "horizontal") {
-     miniSquares[wallIndex][player2Position[0]].color = "black";
-   } else {
-     miniSquares[player2Position[1]][wallIndex].color = "black";
-   }
- 
-   // Switch the current player
-   currentPlayer = 1;
- }
+
+    // Verificăm dacă computerul a atins limita de 4 ziduri
+    if (computerWallCount >= 4) {
+      currentPlayer = 1;
+      return;
+    }
+
+  // Randomly choose a wall to place
+  let wallType = Math.random() < 0.5 ? "horizontal" : "vertical";
+  let wallIndex = Math.floor(Math.random() * (tableSize - 1));
+
+  // Check if the chosen wall is already placed
+  let wall;
+  if (wallType === "horizontal") {
+    wall = wallsHorizontal[wallIndex][player2Position[0]];
+    if (wall.color === "black" || wallsHorizontal[wallIndex][player2Position[0] + 1].color === "black") {
+      // The chosen wall or its neighboring wall is already placed, make another move
+      makeMoveComputer();
+      return;
+    }
+    wall.color = "black";
+    wallsHorizontal[wallIndex][player2Position[0] + 1].color = "black";
+    miniSquares[wallIndex][player2Position[0]].color = "black";
+    miniSquares[wallIndex][player2Position[0]].color = "black";
+  } else {
+    wall = wallsVertical[player2Position[1]][wallIndex];
+    if (wall.color === "black" || wallsVertical[player2Position[1] + 1][wallIndex].color === "black") {
+      // The chosen wall or its neighboring wall is already placed, make another move
+      makeMoveComputer();
+      return;
+    }
+    wall.color = "black";
+    wallsVertical[player2Position[1] + 1][wallIndex].color = "black";
+    miniSquares[player2Position[1]][wallIndex].color = "black";
+    miniSquares[player2Position[1] + 1][wallIndex].color = "black";
+  }
+
+    // Incrementăm numărul de ziduri plasate de computer
+    computerWallCount++;
+
+  // Switch the current player
+  currentPlayer = 1;
+}
+
+
 
 
 function getValidMoves(x, y) {
