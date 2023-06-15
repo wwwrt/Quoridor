@@ -56,7 +56,7 @@ function drawGame() {
  
   // Afișează mesajul pentru rândul fiecăruia
   if (currentPlayer === 1) {
-    message =  player1Name + ", e rândul tău!!";
+    message =  player1Name + ", e rândul tău!";
     fill('black');
     textSize(30);
     textAlign(CENTER, BOTTOM);
@@ -64,6 +64,7 @@ function drawGame() {
   }
 
   if (currentPlayer === 2) {
+    message =  player2Name + ", e rândul tău!";
     fill('black');
     textSize(30);
     textAlign(CENTER, TOP);
