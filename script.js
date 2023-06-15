@@ -403,19 +403,63 @@ function keyPressed() {
   }
 }
 
+
+
+function findShortestPath(playerX, playerY) {
+  let queue = [[playerX, playerY]];
+  let visited = Array(tableSize).fill(false).map(() => Array(tableSize).fill(false));
+  visited[playerX][playerY] = true;
+
+  while (queue.length > 0) {
+    let currentPos = queue.shift();
+    let x = currentPos[0];
+    let y = currentPos[1];
+
+    if (y === 0) {
+      return true; // Calea cea mai rapidă a fost găsită
+    }
+
+    let neighbors = getValidMoves(x, y);
+    for (let i = 0; i < neighbors.length; i++) {
+      let newX = neighbors[i][0];
+      let newY = neighbors[i][1];
+      if (!visited[newX][newY]) {
+        visited[newX][newY] = true;
+        queue.push([newX, newY]);
+      }
+    }
+  }
+
+  return false; // Nu există o cale către partea superioară
+}
+
 let computerWallCount = 0;
 
 function makeMoveComputer() {
   if (currentPlayer === 2 && isPlaying) {
     let validMoves = getValidMoves(player2Position[0], player2Position[1]);
     if (validMoves.length > 0) {
-      let randomMove = random(validMoves);
-      let newX = randomMove[0];
-      let newY = randomMove[1];
+    // Verificăm dacă există o cale cea mai rapidă către partea superioară
+    let hasShortestPath = findShortestPath(player2Position[0], player2Position[1]);
+    if (hasShortestPath) {
+      // Mutăm pionul către poziția care duce către partea superioară
+      let newX = player2Position[0];
+      let newY = player2Position[1];
+      for (let i = 0; i < validMoves.length; i++) {
+        let moveX = validMoves[i][0];
+        let moveY = validMoves[i][1];
+        if (moveY < newY) {
+          newX = moveX;
+          newY = moveY;
+        }
+      }
       movePlayer(player2Position[0], player2Position[1], newX, newY);
       currentPlayer = 1;
+      return;
     }
   }
+}
+
 
     // Verificăm dacă computerul a atins limita de 4 ziduri
     if (computerWallCount >= 4) {
