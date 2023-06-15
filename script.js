@@ -9,7 +9,6 @@ let squares = [];
 let wallsVertical = [];
 let wallsHorizontal = [];
 
-let showWalls = true;
 
 const player1Input = document.getElementById("player1");
 const player2Input = document.getElementById("player2");
@@ -101,6 +100,28 @@ function draw() {
 
 }
 
+function mouseClicked() {
+  for (let i = 0; i < wallsVertical.length; i++) {
+    for (let j = 0; j < wallsVertical[i].length; j++) {
+      let wall = wallsVertical[i][j];
+      if (
+        mouseX > wall.x && mouseX < wall.x + 10 && mouseY > wall.y && mouseY < wall.y + cellSize
+      ) 
+      {wall.color = "blue";}
+    }
+  }
+
+  for (let i = 0; i < wallsHorizontal.length; i++) {
+    for (let j = 0; j < wallsHorizontal[i].length; j++) {
+      let wall = wallsHorizontal[i][j];
+      if (
+        mouseX > wall.x && mouseX < wall.x + cellSize && mouseY > wall.y && mouseY < wall.y + 10
+      ) 
+      {wall.color = "blue";}
+    }
+  }
+}
+
 
 function createBoard() {
   for (let i = 0; i < tableSize; i++) {
@@ -159,23 +180,6 @@ function showBoard() {
     }
   }
 
-  if (showWalls) {
-    // Desenează zidurile verticale
-    for (let i = 0; i < tableSize; i++) {
-      for (let j = 0; j < tableSize; j++) {
-        fill(wallsVertical[i][j].color);
-        rect(wallsVertical[i][j].x, wallsVertical[i][j].y, 10, cellSize);
-      }
-    }
-
-    // Desenează zidurile orizontale
-    for (let i = 0; i < tableSize; i++) {
-      for (let j = 0; j < tableSize; j++) {
-        fill(wallsHorizontal[i][j].color);
-        rect(wallsHorizontal[i][j].x, wallsHorizontal[i][j].y, cellSize, 10);
-      }
-    }
-  }
 
      // Desenează numele jucătorului 1 în partea de sus
   fill(0);
@@ -194,24 +198,6 @@ function showBoard() {
 
 }
 
-function mouseClicked() {
-  if (mouseX > tableOffset && mouseX < tableOffset + cellSize * tableSize && mouseY > tableOffset && mouseY < tableOffset + cellSize * tableSize) {
-    let i = Math.floor((mouseY - tableOffset) / cellSize);
-    let j = Math.floor((mouseX - tableOffset) / cellSize);
-
-    if (mouseButton === LEFT) {
-      // Adaugă zidul vertical
-      if (j < tableSize - 1) {
-        wallsVertical[i][j].color = showWalls ? 'red' : 'white';
-      }
-    } else if (mouseButton === RIGHT) {
-      // Adaugă zidul orizontal
-      if (i < tableSize - 1) {
-        wallsHorizontal[i][j].color = showWalls ? 'red' : 'white';
-      }
-    }
-  }
-}
 
 
 function displayMessage() {
