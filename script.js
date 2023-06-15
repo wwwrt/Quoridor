@@ -14,6 +14,7 @@ const player1NameElement = document.getElementById("player1-name");
 const player2NameElement = document.getElementById("player2-name");
 
 
+
 // Setarea numelor jucătorilor
 function setPlayerNames() {
   player1NameElement.textContent = player1Input.value;
@@ -21,7 +22,7 @@ function setPlayerNames() {
 }
 
 // Desenarea jocului pe canvas
-function drawGame() { 
+function drawGame() {
   // Verifică dacă jucătorul 1 a ajuns în capătul opus
   if (player1Position[0] === tableSize - 1) {
     // Actualizează variabila isPlaying
