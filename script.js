@@ -262,90 +262,104 @@ function keyPressed() {
         }
       }
     } else if (keyCode === DOWN_ARROW && player1Position[1] < tableSize - 1) {
-      if (squares[player1Position[1] + 1][player1Position[0]].color !== 'red') {
-        squares[player1Position[1]][player1Position[0]].color = '#318247';
-        player1Position[1]++;
-        squares[player1Position[1]][player1Position[0]].color = 'blue';
-        currentPlayer = 2;
-      } else if (player1Position[1] < tableSize - 2) {
-        squares[player1Position[1]][player1Position[0]].color = '#318247';
-        player1Position[1] += 2;
-        squares[player1Position[1]][player1Position[0]].color = 'blue';
-        currentPlayer = 2;
+      if (wallsHorizontal[player1Position[1]][player1Position[0]].color == "white") {
+        if (squares[player1Position[1] + 1][player1Position[0]].color !== 'red') {
+          squares[player1Position[1]][player1Position[0]].color = '#318247';
+          player1Position[1]++;
+          squares[player1Position[1]][player1Position[0]].color = 'blue';
+          currentPlayer = 2;
+        } else if (player1Position[1] < tableSize - 2) {
+          squares[player1Position[1]][player1Position[0]].color = '#318247';
+          player1Position[1] += 2;
+          squares[player1Position[1]][player1Position[0]].color = 'blue';
+          currentPlayer = 2;
+        }
       }
     } else if (keyCode === LEFT_ARROW && player1Position[0] > 0) {
-      if (squares[player1Position[1]][player1Position[0] - 1].color !== 'red') {
-        squares[player1Position[1]][player1Position[0]].color = '#318247';
-        player1Position[0]--;
-        squares[player1Position[1]][player1Position[0]].color = 'blue';
-        currentPlayer = 2;
-      } else if (player1Position[0] > 1) {
-        squares[player1Position[1]][player1Position[0]].color = '#318247';
-        player1Position[0] -= 2;
-        squares[player1Position[1]][player1Position[0]].color = 'blue';
-        currentPlayer = 2;
+      if (wallsVertical[player1Position[1]][player1Position[0] - 1].color !== 'black') {
+        if (squares[player1Position[1]][player1Position[0] - 1].color !== 'red') {
+          squares[player1Position[1]][player1Position[0]].color = '#318247';
+          player1Position[0]--;
+          squares[player1Position[1]][player1Position[0]].color = 'blue';
+          currentPlayer = 2;
+        } else if (player1Position[0] > 1) {
+          squares[player1Position[1]][player1Position[0]].color = '#318247';
+          player1Position[0] -= 2;
+          squares[player1Position[1]][player1Position[0]].color = 'blue';
+          currentPlayer = 2;
       }
+     }
     } else if (keyCode === RIGHT_ARROW && player1Position[0] < tableSize - 1) {
-      if (squares[player1Position[1]][player1Position[0] + 1].color !== 'red') {
-        squares[player1Position[1]][player1Position[0]].color = '#318247';
-        player1Position[0]++;
-        squares[player1Position[1]][player1Position[0]].color = 'blue';
-        currentPlayer = 2;
-      } else if (player1Position[0] < tableSize - 2) {
-        squares[player1Position[1]][player1Position[0]].color = '#318247';
-        player1Position[0] += 2;
-        squares[player1Position[1]][player1Position[0]].color = 'blue';
-        currentPlayer = 2;
+      if (wallsVertical[player1Position[1]][player1Position[0]].color !== 'black') {
+        if (squares[player1Position[1]][player1Position[0] + 1].color !== 'red') {
+          squares[player1Position[1]][player1Position[0]].color = '#318247';
+          player1Position[0]++;
+          squares[player1Position[1]][player1Position[0]].color = 'blue';
+          currentPlayer = 2;
+        } else if (player1Position[0] < tableSize - 2) {
+          squares[player1Position[1]][player1Position[0]].color = '#318247';
+          player1Position[0] += 2;
+          squares[player1Position[1]][player1Position[0]].color = 'blue';
+          currentPlayer = 2;
+        }
       }
     }
   } else if (currentPlayer === 2) {
     if (key === 'w' && player2Position[1] > 0) {
-      if (squares[player2Position[1] - 1][player2Position[0]].color !== 'blue') {
-        squares[player2Position[1]][player2Position[0]].color = '#318247';
-        player2Position[1]--;
-        squares[player2Position[1]][player2Position[0]].color = 'red';
-        currentPlayer = 1;
-      } else if (player2Position[1] > 1) {
-        squares[player2Position[1]][player2Position[0]].color = '#318247';
-        player2Position[1] -= 2;
-        squares[player2Position[1]][player2Position[0]].color = 'red';
-        currentPlayer = 1;
+      if (wallsHorizontal[player2Position[1] - 1][player2Position[0]].color !== 'black') {
+        if (squares[player2Position[1] - 1][player2Position[0]].color !== 'blue') {
+          squares[player2Position[1]][player2Position[0]].color = '#318247';
+          player2Position[1]--;
+          squares[player2Position[1]][player2Position[0]].color = 'red';
+          currentPlayer = 1;
+        } else if (player2Position[1] > 1) {
+          squares[player2Position[1]][player2Position[0]].color = '#318247';
+          player2Position[1] -= 2;
+          squares[player2Position[1]][player2Position[0]].color = 'red';
+          currentPlayer = 1;
+        }
       }
     } else if (key === 's' && player2Position[1] < tableSize - 1) {
-      if (squares[player2Position[1] + 1][player2Position[0]].color !== 'blue') {
-        squares[player2Position[1]][player2Position[0]].color = '#318247';
-        player2Position[1]++;
-        squares[player2Position[1]][player2Position[0]].color = 'red';
-        currentPlayer = 1;
-      } else if (player2Position[1] < tableSize - 2) {
-        squares[player2Position[1]][player2Position[0]].color = '#318247';
-        player2Position[1] += 2;
-        squares[player2Position[1]][player2Position[0]].color = 'red';
-        currentPlayer = 1;
+      if (wallsHorizontal[player2Position[1]][player2Position[0]].color !== 'black') {
+        if (squares[player2Position[1] + 1][player2Position[0]].color !== 'blue') {
+          squares[player2Position[1]][player2Position[0]].color = '#318247';
+          player2Position[1]++;
+          squares[player2Position[1]][player2Position[0]].color = 'red';
+          currentPlayer = 1;
+        } else if (player2Position[1] < tableSize - 2) {
+          squares[player2Position[1]][player2Position[0]].color = '#318247';
+          player2Position[1] += 2;
+          squares[player2Position[1]][player2Position[0]].color = 'red';
+          currentPlayer = 1;
+        }
       }
     } else if (key === 'a' && player2Position[0] > 0) {
-      if (squares[player2Position[1]][player2Position[0] - 1].color !== 'blue') {
-        squares[player2Position[1]][player2Position[0]].color = '#318247';
-        player2Position[0]--;
-        squares[player2Position[1]][player2Position[0]].color = 'red';
-        currentPlayer = 1;
-      } else if (player2Position[0] > 1) {
-        squares[player2Position[1]][player2Position[0]].color = '#318247';
-        player2Position[0] -= 2;
-        squares[player2Position[1]][player2Position[0]].color = 'red';
-        currentPlayer = 1;
+      if (wallsVertical[player2Position[1]][player2Position[0] - 1].color !== 'black') {
+        if (squares[player2Position[1]][player2Position[0] - 1].color !== 'blue') {
+          squares[player2Position[1]][player2Position[0]].color = '#318247';
+          player2Position[0]--;
+          squares[player2Position[1]][player2Position[0]].color = 'red';
+          currentPlayer = 1;
+        } else if (player2Position[0] > 1) {
+          squares[player2Position[1]][player2Position[0]].color = '#318247';
+          player2Position[0] -= 2;
+          squares[player2Position[1]][player2Position[0]].color = 'red';
+          currentPlayer = 1;
+        }
       }
     } else if (key === 'd' && player2Position[0] < tableSize - 1) {
-      if (squares[player2Position[1]][player2Position[0] + 1].color !== 'blue') {
-        squares[player2Position[1]][player2Position[0]].color = '#318247';
-        player2Position[0]++;
-        squares[player2Position[1]][player2Position[0]].color = 'red';
-        currentPlayer = 1;
-      } else if (player2Position[0] < tableSize - 2) {
-        squares[player2Position[1]][player2Position[0]].color = '#318247';
-        player2Position[0] += 2;
-        squares[player2Position[1]][player2Position[0]].color = 'red';
-        currentPlayer = 1;
+      if (wallsVertical[player2Position[1]][player2Position[0]].color !== 'black') {
+        if (squares[player2Position[1]][player2Position[0] + 1].color !== 'blue') {
+          squares[player2Position[1]][player2Position[0]].color = '#318247';
+          player2Position[0]++;
+          squares[player2Position[1]][player2Position[0]].color = 'red';
+          currentPlayer = 1;
+        } else if (player2Position[0] < tableSize - 2) {
+          squares[player2Position[1]][player2Position[0]].color = '#318247';
+          player2Position[0] += 2;
+          squares[player2Position[1]][player2Position[0]].color = 'red';
+          currentPlayer = 1;
+        }
       }
     }
   }
