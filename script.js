@@ -467,16 +467,16 @@ function makeMoveComputer() {
       return;
     }
 
-  // Randomly choose a wall to place
+  // Aseaza un zid random
   let wallType = Math.random() < 0.5 ? "horizontal" : "vertical";
   let wallIndex = Math.floor(Math.random() * (tableSize - 1));
 
-  // Check if the chosen wall is already placed
+  // Verifica daca zidul e deja asezat
   let wall;
   if (wallType === "horizontal") {
     wall = wallsHorizontal[wallIndex][player2Position[0]];
     if (wall.color === "black" || wallsHorizontal[wallIndex][player2Position[0] + 1].color === "black") {
-      // The chosen wall or its neighboring wall is already placed, make another move
+      // Daca zidul deja exista, fa alta mutare
       makeMoveComputer();
       return;
     }
@@ -487,7 +487,7 @@ function makeMoveComputer() {
   } else {
     wall = wallsVertical[player2Position[1]][wallIndex];
     if (wall.color === "black" || wallsVertical[player2Position[1] + 1][wallIndex].color === "black") {
-      // The chosen wall or its neighboring wall is already placed, make another move
+      // Daca zidul deja exista, fa alta mutare
       makeMoveComputer();
       return;
     }
@@ -500,14 +500,14 @@ function makeMoveComputer() {
     // Incrementăm numărul de ziduri plasate de computer
     computerWallCount++;
 
-  // Switch the current player
+  // Schimba jucatorul
   currentPlayer = 1;
 }
 
 
-
-
 function getValidMoves(x, y) {
+
+  
   let validMoves = [];
 
   if (x > 0 && wallsVertical[y][x - 1].color !== 'black') {
@@ -522,6 +522,15 @@ function getValidMoves(x, y) {
   if (y < tableSize - 1 && wallsHorizontal[y][x].color !== 'black') {
     validMoves.push([x, y + 1]);
   }
+
+  // // Remove moves that collide with walls
+  // for (let i = validMoves.length - 1; i >= 0; i--) {
+  //   let moveX = validMoves[i][0];
+  //   let moveY = validMoves[i][1];
+  //   if (wallsVertical[moveY][moveX].color === 'black' || wallsHorizontal[moveY][moveX].color === 'black') {
+  //     validMoves.splice(i, 1);
+  //   }
+  // }
 
   return validMoves;
 }
