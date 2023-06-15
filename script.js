@@ -6,6 +6,7 @@ let tableOffset = 150; // Offset-ul tablei
 let squares = [];
 let wallsVertical = [];
 let wallsHorizontal = [];
+let miniSquares = [];
 
 
 const player1Input = document.getElementById("player1");
@@ -103,7 +104,7 @@ function mouseClicked() {
       let wall = wallsVertical[i][j];
       if (
         mouseX > wall.x && mouseX < wall.x + 10 && mouseY > wall.y && mouseY < wall.y + cellSize
-      ) { wall.color = "black"; wallsVertical[i + 1][j].color = 'black'; }
+      ) { wall.color = "black"; wallsVertical[i + 1][j].color = 'black'; miniSquares[i][j].color='black';}
     }
   }
 
@@ -112,7 +113,7 @@ function mouseClicked() {
       let wall = wallsHorizontal[i][j];
       if (
         mouseX > wall.x && mouseX < wall.x + cellSize && mouseY > wall.y && mouseY < wall.y + 10
-      ) { wall.color = "black"; wallsHorizontal[i][j+1].color='black'; }
+      ) { wall.color = "black"; wallsHorizontal[i][j+1].color='black'; miniSquares[i][j].color='black';}
     }
   }
 }
@@ -151,7 +152,19 @@ function createBoard() {
       });
     }
   }
+  for (let i = 0; i < tableSize - 1; i++) {
+    miniSquares.push([]);
+    for (let j = 0; j < tableSize -1; j++) {
+      miniSquares[i].push({
+        x: j * 60 + 150,
+        y: i * 60 + 100+50,
+        color: "white",
+      });
+    }
+  }
 }
+
+
 
 
 function showBoard() {
@@ -175,6 +188,14 @@ function showBoard() {
       rect(wallsHorizontal[i][j].x, wallsHorizontal[i][j].y, cellSize, 10);
     }
   }
+
+  for (let i = 0; i < tableSize -1 ; i++) {
+    for (let j = 0; j < tableSize -1; j++) {
+      fill(miniSquares[i][j].color);
+      rect(miniSquares[i][j].x, miniSquares[i][j].y, 10, 10);
+    }
+  }
+
 
 
   // Desenează numele jucătorului 1 în partea de sus
