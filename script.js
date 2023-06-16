@@ -9,6 +9,7 @@ let wallsHorizontal = [];
 let miniSquares = [];
 
 let ele;
+let img;
 
 const player1Input = document.getElementById("player1");
 const player2Input = document.getElementById("player2");
@@ -95,16 +96,21 @@ function setup() {
   createBoard();
 
   // Adaugam butonul de resetare
-  let resetButton = createButton('Reset');
-  resetButton.position(tableOffset * 2 + cellSize * tableSize - 60, 10);
+  let resetButton = createImg('reset.png');
+  resetButton.id('resetButton'); // Adaugă atributul id pentru buton
+  resetButton.position(tableOffset * 2 + cellSize * tableSize - 410, tableOffset * 2 + cellSize * tableSize - -20);
   resetButton.mousePressed(resetBoard);
+  
 
 }
 
+function preload() {
+  img = loadImage('img1.png');
+}
 
 // Desenarea tabelului
 function draw() {
-  background(245);
+  background(img);
   setPlayerNames();
   showBoard();
   drawGame();
