@@ -293,6 +293,8 @@ function keyPressed() {
           currentPlayer = 2;
         } else if (player1Position[1] > 1) {
           squares[player1Position[1]][player1Position[0]].color = '#318247';
+          ele = createAudio('jump.mp3');
+          ele.autoplay(true);
           player1Position[1] -= 2;
           squares[player1Position[1]][player1Position[0]].color = 'blue';
           currentPlayer = 2;
@@ -308,6 +310,8 @@ function keyPressed() {
           currentPlayer = 2;
         } else if (player1Position[1] < tableSize - 2) {
           squares[player1Position[1]][player1Position[0]].color = '#318247';
+          ele = createAudio('jump.mp3');
+          ele.autoplay(true);
           player1Position[1] += 2;
           squares[player1Position[1]][player1Position[0]].color = 'blue';
           currentPlayer = 2;
@@ -323,6 +327,8 @@ function keyPressed() {
           currentPlayer = 2;
         } else if (player1Position[0] > 1) {
           squares[player1Position[1]][player1Position[0]].color = '#318247';
+          ele = createAudio('jump.mp3');
+          ele.autoplay(true);
           player1Position[0] -= 2;
           squares[player1Position[1]][player1Position[0]].color = 'blue';
           currentPlayer = 2;
@@ -339,6 +345,8 @@ function keyPressed() {
           currentPlayer = 2;
         } else if (player1Position[0] < tableSize - 2) {
           squares[player1Position[1]][player1Position[0]].color = '#318247';
+          ele = createAudio('jump.mp3');
+          ele.autoplay(true);
           player1Position[0] += 2;
           squares[player1Position[1]][player1Position[0]].color = 'blue';
           currentPlayer = 2;
@@ -356,6 +364,8 @@ function keyPressed() {
           currentPlayer = 1;
         } else if (player2Position[1] > 1) {
           squares[player2Position[1]][player2Position[0]].color = '#318247';
+          ele = createAudio('jump.mp3');
+          ele.autoplay(true);
           player2Position[1] -= 2;
           squares[player2Position[1]][player2Position[0]].color = 'red';
           currentPlayer = 1;
@@ -370,6 +380,8 @@ function keyPressed() {
           currentPlayer = 1;
         } else if (player2Position[1] < tableSize - 2) {
           squares[player2Position[1]][player2Position[0]].color = '#318247';
+          ele = createAudio('jump.mp3');
+          ele.autoplay(true);
           player2Position[1] += 2;
           squares[player2Position[1]][player2Position[0]].color = 'red';
           currentPlayer = 1;
@@ -384,6 +396,8 @@ function keyPressed() {
           currentPlayer = 1;
         } else if (player2Position[0] > 1) {
           squares[player2Position[1]][player2Position[0]].color = '#318247';
+          ele = createAudio('jump.mp3');
+          ele.autoplay(true);
           player2Position[0] -= 2;
           squares[player2Position[1]][player2Position[0]].color = 'red';
           currentPlayer = 1;
@@ -398,6 +412,8 @@ function keyPressed() {
           currentPlayer = 1;
         } else if (player2Position[0] < tableSize - 2) {
           squares[player2Position[1]][player2Position[0]].color = '#318247';
+          ele = createAudio('jump.mp3');
+          ele.autoplay(true);
           player2Position[0] += 2;
           squares[player2Position[1]][player2Position[0]].color = 'red';
           currentPlayer = 1;
