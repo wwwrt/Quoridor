@@ -8,6 +8,7 @@ let wallsVertical = [];
 let wallsHorizontal = [];
 let miniSquares = [];
 
+let ele;
 
 const player1Input = document.getElementById("player1");
 const player2Input = document.getElementById("player2");
@@ -84,6 +85,9 @@ let currentPlayer = 1; // Jucătorul curent (1 sau 2)
 
 // Initializarea tabelului
 function setup() {
+
+  ele = createAudio('intro.mp3');
+  ele.autoplay(true);
   player1Name = prompt("Introduceți numele jucătorului 1:"); // Prompt pentru numele jucătorului 1
   player2Name = prompt("Introduceți numele jucătorului 2:"); // Prompt pentru numele jucătorului 2
 
@@ -524,7 +528,7 @@ function getValidMoves(x, y) {
   }
 
   // // Remove moves that collide with walls
-  // for (let i = validMoves.length - 1; i >= 0; i--) {
+  // for (let i = 0; i < validMoves.length; i++) {
   //   let moveX = validMoves[i][0];
   //   let moveY = validMoves[i][1];
   //   if (wallsVertical[moveY][moveX].color === 'black' || wallsHorizontal[moveY][moveX].color === 'black') {
